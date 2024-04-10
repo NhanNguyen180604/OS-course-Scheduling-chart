@@ -44,8 +44,10 @@ void RoundRobin::Schedule(const std::string& path)
     }
     Process *currentProcess = nullptr;
     int time = 0;
-    int p_counter = 0;
-    int current_q = this->q;
+    int p_counter = 0;  //processes pointer
+    int current_q = this->q;  //current quantum left
+
+    std::string schedulingChart = "Scheduling chart: 0 ";
     
     while (true)
     {
@@ -61,6 +63,7 @@ void RoundRobin::Schedule(const std::string& path)
             }
         }
 
+        // switch to next process in queue
         if (currentProcess == nullptr)
         {
             if (!qu.empty())
@@ -77,6 +80,9 @@ void RoundRobin::Schedule(const std::string& path)
 
             if (current_q == 0 || currentProcess->cpuBurst == 0)
             {
+                // write scheduling chart
+                schedulingChart += "~" + currentProcess->name + "~ " + std::to_string(time + 1) + " ";
+
                 current_q = this->q;
                 if (currentProcess->cpuBurst == 0)
                 {
@@ -93,8 +99,5 @@ void RoundRobin::Schedule(const std::string& path)
         time++;
     }
 
-    for (const Process& process: processes)
-    {
-        std::cout << process.turnaroundTime << "  " << process.waitTime << '\n';
-    }
+    OutputFile(schedulingChart, "RR.txt");
 }
