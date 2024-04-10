@@ -3,27 +3,10 @@
 bool RoundRobin::ReadFile(const std::string& path)
 {
     std::ifstream fin(path);
-    if (!fin)
+    if (!fin || !Scheduler::ReadFile(path))
         return false;
 
-    int n;
-    fin >> n;
-    fin >> this->q;
-
-    for (int i = 0; i < n; i++)
-    {
-        std::string name;
-        int arrivalTime;
-        int cpuBurst;
-        int priority;
-        fin >> name >> arrivalTime >> cpuBurst >> priority;
-        this->processes.push_back(Process(name, arrivalTime, cpuBurst, priority));
-    }
-
-    std::sort(processes.begin(), processes.end(), [](Process a, Process b)
-    {
-        return a.arrivalTime < b.arrivalTime;
-    });
+    fin >> this->q >> this->q;
     fin.close();
     return true;
 }
@@ -49,11 +32,8 @@ void RoundRobin::Schedule(const std::string& path)
 
     std::string schedulingChart = "Scheduling chart: 0 ";
     
-    while (true)
+    while (!(p_counter == processes.size() && qu.empty() && currentProcess == nullptr))
     {
-        if (p_counter == processes.size() && qu.empty() && currentProcess == nullptr)
-            break;
-
         if (p_counter != processes.size())
         {
             if (time == processes[p_counter].arrivalTime)
@@ -99,5 +79,7 @@ void RoundRobin::Schedule(const std::string& path)
         time++;
     }
 
-    OutputFile(schedulingChart, "RR.txt");
+    if (!OutputFile(schedulingChart, "RR.txt"))
+        std::cout << "An error occurred trying to output \"RR.txt\"\n";
+    else std::cout << "Outputted \"RR.txt\"\n";
 }

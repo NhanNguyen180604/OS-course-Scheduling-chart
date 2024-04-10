@@ -20,6 +20,11 @@ bool Scheduler::ReadFile(const std::string& path)
         this->processes.push_back(Process(name, arrivalTime, cpuBurst, priority));
     }
 
+    std::sort(processes.begin(), processes.end(), [](Process a, Process b)
+    {
+        return a.arrivalTime < b.arrivalTime;
+    });
+
     fin.close();
     return true;
 }
