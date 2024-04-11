@@ -33,6 +33,12 @@
     <ClCompile Include="FCFS.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SJF.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Priority.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RoundRobin.h">
@@ -48,6 +54,12 @@
       <Filter>Resource Files</Filter>
     </ClInclude>
     <ClInclude Include="FCFS.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SJF.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Priority.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
   </ItemGroup>
