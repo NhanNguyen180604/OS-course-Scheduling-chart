@@ -26,22 +26,21 @@ void SJF::Schedule(const std::string& path)
 
     while (!(p_counter == processes.size() && qu.empty() && currentProcess == nullptr))
     {
-        if (p_counter != processes.size())
+        while (p_counter != processes.size() && time == processes[p_counter].arrivalTime)
         {
-            if (time == processes[p_counter].arrivalTime)
-            {
-                qu.push(&processes[p_counter]);
-                //get the new priority process
-                auto newProcess = qu.top();
-                if (newProcess != currentProcess) {
-                    // write scheduling chart
-                    if (currentProcess != nullptr)
-                        schedulingChart += "~" + currentProcess->name + "~ " + std::to_string(time) + " ";
-                    currentProcess = newProcess;
-                }
-                p_counter++;
-            }
+            qu.push(&processes[p_counter]);
+            p_counter++;
         }
+
+        //get the new shortest process
+        auto newProcess = qu.top();
+        if (newProcess != currentProcess) {
+            // write scheduling chart
+            if (currentProcess != nullptr)
+                schedulingChart += "~" + currentProcess->name + "~ " + std::to_string(time) + " ";
+            currentProcess = newProcess;
+        }
+
         if (currentProcess != nullptr) {
             currentProcess->cpuBurst--;
             if (currentProcess->cpuBurst == 0)

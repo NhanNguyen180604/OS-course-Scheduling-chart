@@ -34,13 +34,10 @@ void RoundRobin::Schedule(const std::string& path)
     
     while (!(p_counter == processes.size() && qu.empty() && currentProcess == nullptr))
     {
-        if (p_counter != processes.size())
+        while (p_counter != processes.size() && time == processes[p_counter].arrivalTime)
         {
-            if (time == processes[p_counter].arrivalTime)
-            {
-                qu.push(&processes[p_counter]);
-                p_counter++;
-            }
+            qu.push(&processes[p_counter]);
+            p_counter++;
         }
 
         // switch to next process in queue
