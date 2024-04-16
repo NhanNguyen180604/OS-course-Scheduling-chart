@@ -33,15 +33,20 @@ void Priority::Schedule(const std::string& path)
         }
 
         //get the new priority process
-        auto newProcess = qu.top();
-        if( newProcess != currentProcess){
-            // write scheduling chart
-            if(currentProcess != nullptr)
-                schedulingChart += "~" + currentProcess->name + "~ " + std::to_string(time) + " ";
-            currentProcess = newProcess;
+        if (!qu.empty())
+        {
+            auto newProcess = qu.top();
+            if (newProcess != currentProcess)
+            {
+                // write scheduling chart
+                if(currentProcess != nullptr)
+                    schedulingChart += "~" + currentProcess->name + "~ " + std::to_string(time) + " ";
+                currentProcess = newProcess;
+            }
         }
-
-        if(currentProcess != nullptr){
+        
+        if(currentProcess != nullptr)
+        {
             currentProcess->cpuBurst--;
             if (currentProcess->cpuBurst == 0)
             {

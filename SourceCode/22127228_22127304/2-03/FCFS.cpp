@@ -8,7 +8,7 @@ void FCFS::Schedule(const std::string& path)
         return;
     }    
 
-    int time = processes[0].arrivalTime;
+    int time = 0;
     int p_counter = 0;  //processes pointer
 
     std::string schedulingChart = "Scheduling chart: 0 ";
@@ -16,6 +16,8 @@ void FCFS::Schedule(const std::string& path)
     while (p_counter != processes.size())
     {
         Process* process = &processes[p_counter++];
+        if (time < process->arrivalTime)
+            time = process->arrivalTime;
         time += process->cpuBurst;
         schedulingChart += "~" + process->name + "~ " + std::to_string(time) + " ";
         process->turnaroundTime = time - process->arrivalTime;
