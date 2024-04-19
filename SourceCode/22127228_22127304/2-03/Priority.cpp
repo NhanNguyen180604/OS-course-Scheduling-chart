@@ -65,6 +65,6 @@ void Priority::Schedule(const std::string& path)
     }
 
     if (!OutputFile(schedulingChart, "Priority.txt"))
-        std::cout << "An error occurred trying to output \"RR.txt\"\n";
+        std::cout << "An error occurred trying to output \"Priority.txt\"\n";
     else std::cout << "Outputted \"Priority.txt\"\n";
 }
